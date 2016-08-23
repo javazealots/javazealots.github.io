@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Java Zealot" />
+
+
+
+<meta name="description" content="正则表达式
+一小时保你学会正则表达式.
+
+当我们处理大段文章的时候，需要匹配或者替换一些内容的时候，或者需要截取下载页面中你需要的信息的时候，我们就需要用正则表达式去匹配我们需要的东西。并且现在python的网络爬虫的时候，通常要借助正则表达式去匹配元素。所以学会正则表达式也是很有帮助的。
+必要的准备
+
+建议安装一个[RegexBuddy]，对于创建正则表达式非常方便。本教程也是使用的该工具
+熟悉">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式">
+<meta property="og:url" content="http://yoursite.com/2016/08/23/regex/index.html">
+<meta property="og:site_name" content="技术杂谈">
+<meta property="og:description" content="正则表达式
+一小时保你学会正则表达式.
+
+当我们处理大段文章的时候，需要匹配或者替换一些内容的时候，或者需要截取下载页面中你需要的信息的时候，我们就需要用正则表达式去匹配我们需要的东西。并且现在python的网络爬虫的时候，通常要借助正则表达式去匹配元素。所以学会正则表达式也是很有帮助的。
+必要的准备
+
+建议安装一个[RegexBuddy]，对于创建正则表达式非常方便。本教程也是使用的该工具
+熟悉">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_1.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_2.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_3.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_4.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_5.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_6.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_7.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_8.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_9.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_10.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_11.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_12.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_13.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_14.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_15.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_16.png">
+<meta property="og:image" content="http://yoursite.com/img/regex/regex_17.png">
+<meta property="og:updated_time" content="2016-08-23T03:03:52.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则表达式">
+<meta name="twitter:description" content="正则表达式
+一小时保你学会正则表达式.
+
+当我们处理大段文章的时候，需要匹配或者替换一些内容的时候，或者需要截取下载页面中你需要的信息的时候，我们就需要用正则表达式去匹配我们需要的东西。并且现在python的网络爬虫的时候，通常要借助正则表达式去匹配元素。所以学会正则表达式也是很有帮助的。
+必要的准备
+
+建议安装一个[RegexBuddy]，对于创建正则表达式非常方便。本教程也是使用的该工具
+熟悉">
+<meta name="twitter:image" content="http://yoursite.com/img/regex/regex_1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="技术杂谈" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>正则表达式 | 技术杂谈</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Java Zealot</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">一些捉襟见肘的想法</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Java Zealot</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Java Zealot</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">一些捉襟见肘的想法</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-regex" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/23/regex/" class="article-date">
+      <time datetime="2016-08-23T03:04:11.000Z" itemprop="datePublished">2016-08-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      正则表达式
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/正则表达式/">正则表达式</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/正则表达式/">正则表达式</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><blockquote>
+<p>一小时保你学会正则表达式.</p>
+</blockquote>
+<p>当我们处理大段文章的时候，需要匹配或者替换一些内容的时候，或者需要截取下载页面中你需要的信息的时候，我们就需要用正则表达式去匹配我们需要的东西。并且现在python的网络爬虫的时候，通常要借助正则表达式去匹配元素。所以学会正则表达式也是很有帮助的。</p>
+<p><strong>必要的准备</strong></p>
+<ul>
+<li>建议安装一个[RegexBuddy]，对于创建正则表达式非常方便。本教程也是使用的该工具</li>
+<li>熟悉一下java中的 [Pattern]</li>
+</ul>
+<p><em>好了，接下来就进入正题吧！</em><br><a id="more"></a></p>
+<h2 id="1-基本字符-无意义的字符"><a href="#1-基本字符-无意义的字符" class="headerlink" title="1.基本字符(无意义的字符)"></a>1.基本字符(无意义的字符)</h2><blockquote>
+<p>所谓基本字符，其实就是没有意义的字符。也就是说，你写出来是什么，就匹配什么。</p>
+</blockquote>
+<p><strong>所包含的字符</strong></p>
+<ul>
+<li>大小写字母</li>
+<li>数字</li>
+<li>汉字</li>
+<li>有含义的字符加上“\”(反斜杠)进行转义，比如：\.,\\等</li>
+</ul>
+<p><strong>注意</strong></p>
+<blockquote>
+<p>各个字符之间没有特殊符号的时候，他们之间是并的关系。即ab匹配的是文本中的ab，而不文本中所有的是a和b</p>
+</blockquote>
+<p><strong>实例</strong></p>
+<ul>
+<li>数字匹配<br><img src="/img/regex/regex_1.png" alt="regex_1"></li>
+<li>字母匹配<br><img src="/img/regex/regex_2.png" alt="regex_2"></li>
+<li><p>特殊字符匹配(如果需要匹配的字符是特殊字符，则需要将特殊字符进行转义，即加上”\”)</p>
+<blockquote>
+<p>介绍几个常见的特殊字符<br>\n -&gt; 换行符<br>\t -&gt; 制表符(Tab)<br>.;+;?;^     -&gt; 正则表达式中的特殊字符(后面都会讲到)</p>
+</blockquote>
+<p><img src="/img/regex/regex_3.png" alt="regex_3"></p>
+</li>
+</ul>
+<h2 id="2-标准字符集合"><a href="#2-标准字符集合" class="headerlink" title="2.标准字符集合"></a>2.标准字符集合</h2><p><strong>注意:要区分大小写，大小写的意义是相反的。空白符包括空格、换行符、制表符等</strong></p>
+<div><table><br><tr><td>\d</td><td>表示0-9中任何<font color="red">一个</font>数字</td></tr><br><tr><td>\D</td><td>表示除数字外任何<font color="red">一个</font>字符</td></tr><br><tr><td>\w</td><td>表示A-Z,a-z,0-9,<em>中任何<font color="red">一个</font>字符</em></td></tr><br><tr><td>\W</td><td>表示除A-Z,a-z,0-9,中任何<font color="red">一个</font>字符</td></tr><br><tr><td>\s</td><td>表示空白符中任何<font color="red">一个</font>字符</td></tr><br><tr><td>\S</td><td>表示除空白符中任何<font color="red">一个</font>字符</td></tr><br><tr><td>. </td><td>表示除换行符外的任何<font color="red">一个</font>字符</td></tr><br></table></div>
+
+
+<p><strong>实例</strong></p>
+<ul>
+<li>\d 和 \D<br><img src="/img/regex/regex_4.png" alt="regex_4"><br><img src="/img/regex/regex_5.png" alt="regex_5"></li>
+</ul>
+<h2 id="3-自定义字符集合"><a href="#3-自定义字符集合" class="headerlink" title="3.自定义字符集合"></a>3.自定义字符集合</h2><p>其基本用法就是将需要匹配的字符用[]括起来</p>
+<p><strong>注意</strong></p>
+<ul>
+<li>^符号在[]中表示取反的意思</li>
+<li>-中划线在括号内为到的意思，比如一到九就是1-9</li>
+<li>括号中任何正则表达式特殊字符都失去其特殊含义，除了^和-</li>
+<li>括号内各个字符是通过或连接的，比如[ab]匹配的是文本中a或者b字符，与单独的ab是不同的。</li>
+</ul>
+<p><strong>实例</strong><br>  <img src="/img/regex/regex_6.png" alt="regex_6"></p>
+<h2 id="4-量词"><a href="#4-量词" class="headerlink" title="4.量词"></a>4.量词</h2><p>修饰匹配的次数</p>
+<p><strong>注意</strong></p>
+<ul>
+<li>匹配时，默认的是贪婪模式，即按照匹配最大的字符串进行匹配。如果要是想按非贪婪模式的话，在量词后加?即可</li>
+<li>量词后的?和?是不同的~</li>
+<li>+，*，？默认也是贪婪模式的，但是不能通过？来修饰，转换为非贪婪模式</li>
+</ul>
+<div><table><br><tr><td>{m}</td><td>表达式重复m次</td></tr><br><tr><td>{m,n}</td><td>表达式重复至少m次，最多n次</td></tr><br><tr><td>{m,}</td><td>表达式重复至少m次</td></tr><br><tr><td>?</td><td>表达式重复0次或1次，相当于{0,1}</td></tr><br><tr><td>+</td><td>表达式重复至少1次，相当于{1,}</td></tr><br><tr><td>*</td><td>表达式重复至少0次，相当于{0,}</td></tr><br></table></div> 
+
+<p><strong>实例</strong></p>
+<ul>
+<li>实例一<br><img src="/img/regex/regex_7.png" alt="regex_7"></li>
+<li>实例二<br><img src="/img/regex/regex_8.png" alt="regex_8"></li>
+<li>实例三<br><img src="/img/regex/regex_9.png" alt="regex_9"></li>
+</ul>
+<h2 id="5-字符边界"><a href="#5-字符边界" class="headerlink" title="5.字符边界"></a>5.字符边界</h2><p>之前的所有操作都是去匹配一个字符，而接下来要讲的这个内容是匹配位置，即零宽匹配。</p>
+<div><table><br><tr><td>^</td><td>匹配字符串开始的位置</td></tr><br><tr><td>$</td><td>匹配字符串结束的位置</td></tr><br><tr><td>\b</td><td>匹配一个单词边界(即前面的字符和后面的字符不全是\w)</td></tr><br></table></div>
+
+<p><strong>实例</strong></p>
+<ul>
+<li>实例一<br><img src="/img/regex/regex_10.png" alt="regex_10"></li>
+<li>实例二<br><img src="/img/regex/regex_11.png" alt="regex_11"></li>
+</ul>
+<h2 id="6-选择符和分组"><a href="#6-选择符和分组" class="headerlink" title="6.选择符和分组"></a>6.选择符和分组</h2><div><table><br><tr><td>|</td><td>匹配组两边是或的关系，即匹配左边的表达式或者匹配右边的表达式</td></tr><br><tr><td>()捕获组</td><td><ul><li>括号内为一个整体的表达式，与其他的表达式分隔开。</li><li>括号内匹配到的元素会自动缓存到内存当中。</li><li>匹配到的每一组根据()的位置从1开始进行编号</li></ul></td></tr><br><tr><td>(?:表达式)</td><td>如果()的作用仅是与其他表达式隔离，而无需将匹配的结果进行保存，就用该方式</td></tr><br><tr><td>()\n</td><td><ul><li>反向引用</li><li>将指定捕获组的字符串再匹配一次</li><li>该表达式中的n为具体的捕获组编号</li></ul></td></tr><br></table></div>
+
+<p><strong>实例</strong></p>
+<ul>
+<li>实例一(匹配重复2-4次的数字或者重复1-2次的空白符)<br><img src="/img/regex/regex_12.png" alt="regex_12"></li>
+<li>实例二(匹配类似mymy的字符)<br><img src="/img/regex/regex_13.png" alt="regex_13"></li>
+</ul>
+<p><strong>注意</strong></p>
+<blockquote>
+<p>在实例二中，(\w{2})匹配到的是重复两次出现的字母、数字或者下划线。<br>\1代表的是(\w{2})匹配到的内容再匹配一次</p>
+</blockquote>
+<h2 id="7-预搜索"><a href="#7-预搜索" class="headerlink" title="7.预搜索"></a>7.预搜索</h2><p><strong>注意</strong></p>
+<ul>
+<li>此种匹配仍然是位置匹配，即匹配的只是位置，而不是字符</li>
+</ul>
+<div><table><br><tr><td>(?=exp)</td><td>所匹配表达式的后面满足exp条件</td></tr><br><tr><td>(?&lt;=exp)</td><td>所匹配表达式的前面满足exp条件</td></tr><br><tr><td>(?!exp)</td><td>所匹配表达式的后面不满足exp条件</td></tr><br><tr><td>(?&lt;!exp</td><td>所匹配表达式的前面满足exp条件</td></tr><br></table></div>
+
+<p><strong>实例</strong></p>
+<ul>
+<li>实例一(匹配三位数字，且这三位数字后面一位是空白符)<br><img src="/img/regex/regex_14.png" alt="regex_14"></li>
+<li>实例二(匹配三位数字，且这三位数字前面一位是中划线)<br><img src="/img/regex/regex_15.png" alt="regex_15"></li>
+</ul>
+<h1 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h1><h2 id="练习-1-—-电话号码匹配"><a href="#练习-1-—-电话号码匹配" class="headerlink" title="练习 1 —- 电话号码匹配"></a>练习 1 —- 电话号码匹配</h2><ul>
+<li><p>条件</p>
+<ul>
+<li>电话号码由数字和中划线-组成</li>
+<li>电话号码由区号和电话号码组成，中划线左侧是区号，右侧是电话号码</li>
+<li>电话号码为7位或者8位</li>
+<li>区号为3位或4位，首位是0</li>
+<li>移动电话为11位</li>
+<li>移动电话前两位为13,15,17,18</li>
+</ul>
+</li>
+<li><p>正则表达式</p>
+<ul>
+<li>电话号码: 0\d{2,3}-\d{7,8}(?=\s)</li>
+<li>移动电话: 1[3578]\d{9}(?=\s)</li>
+<li>总体: (0\d{2,3}-\d{7,8}(?=\s))|(1[3578]\d{9}(?=\s))</li>
+</ul>
+</li>
+<li><p>实例</p>
+</li>
+</ul>
+<p><img src="/img/regex/regex_16.png" alt="regex_16"></p>
+<h2 id="练习-2-—-邮箱匹配"><a href="#练习-2-—-邮箱匹配" class="headerlink" title="练习 2 —- 邮箱匹配"></a>练习 2 —- 邮箱匹配</h2><ul>
+<li><p>条件</p>
+<ul>
+<li>由数字、字母、@、下划线组成</li>
+<li>@前由字母和数字组成</li>
+<li>@后为域名，由字母和.组成</li>
+</ul>
+</li>
+<li><p>正则表达式</p>
+<ul>
+<li>@前: [\w-]+</li>
+<li>@后: [\da-zA-Z]+(.[\da-zA-Z]+){1,2}</li>
+<li>总体: [\w-]+@[\da-zA-Z]+(.[\da-zA-Z]+){1,2}</li>
+</ul>
+</li>
+<li><p>实例</p>
+</li>
+</ul>
+<p><img src="/img/regex/regex_17.png" alt="regex_17"> </p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2016/08/23/regex/">正则表达式</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">Java Zealot</a></p>
+        <p><span>Created:</span>2016-08-23, 11:04:11</p>
+        <p><span>Updated:</span>2016-08-23, 11:03:52</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2016/08/23/regex/" title="正则表达式">http://yoursite.com/2016/08/23/regex/</a>
+            <span class="copy-path" data-clipboard-text="From http://yoursite.com/2016/08/23/regex/　　By Java Zealot" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式"><span class="toc-number">1.</span> <span class="toc-text">正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-基本字符-无意义的字符"><span class="toc-number">1.1.</span> <span class="toc-text">1.基本字符(无意义的字符)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-标准字符集合"><span class="toc-number">1.2.</span> <span class="toc-text">2.标准字符集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-自定义字符集合"><span class="toc-number">1.3.</span> <span class="toc-text">3.自定义字符集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-量词"><span class="toc-number">1.4.</span> <span class="toc-text">4.量词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-字符边界"><span class="toc-number">1.5.</span> <span class="toc-text">5.字符边界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-选择符和分组"><span class="toc-number">1.6.</span> <span class="toc-text">6.选择符和分组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-预搜索"><span class="toc-number">1.7.</span> <span class="toc-text">7.预搜索</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#练习"><span class="toc-number">2.</span> <span class="toc-text">练习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#练习-1-—-电话号码匹配"><span class="toc-number">2.1.</span> <span class="toc-text">练习 1 —- 电话号码匹配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#练习-2-—-邮箱匹配"><span class="toc-number">2.2.</span> <span class="toc-text">练习 2 —- 邮箱匹配</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"正则表达式　| 技术杂谈　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/08/23/regex/" data-title="正则表达式" data-url="http://yoursite.com/2016/08/23/regex/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"null"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+            // Add comment count
+            $(function(){ 
+                var jsonUrl = "http://api.duoshuo.com/threads/counts.jsonp?short_name=null&threads=2016/08/23/regex/&callback=?";
+                $.getJSON(jsonUrl, function(result){
+                    $.each(result.response, function(i, field){
+                        var value = field.comments;
+                        if (value > 0) {
+                            $(".count-comment").text(value);
+                            return;
+                        }
+                    })
+                })
+            })
+        
+    </script>
+    
+    <aside class="comment-bar">
+        <a href="javascript:void(0);">
+            <i class="fa fa-commenting-o animated infinite pulse"></i>
+            <i class="fa fa-spinner fa-pulse"></i>
+            <span class="count-comment"></span>
+        </a>
+    </aside>
+    <script>
+        var $commentBar = $("#comments aside.comment-bar");
+        var load$hide = function(){
+            $commentBar.find("a > i").toggle();
+            loadComment();
+            $commentBar.fadeOut(800);
+        }
+        $commentBar.click(function(){
+            load$hide();
+        })
+        $commentBar.children("a").hover(function(){
+            load$hide();
+        })
+        if (window.location.hash === "#comments") {
+            load$hide();
+        }
+    </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/regex/">正则表达式</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016 Java Zealot
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
